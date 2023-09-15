@@ -744,6 +744,7 @@ GameObject:
   - component: {fileID: 956393008}
   - component: {fileID: 956393007}
   - component: {fileID: 956393010}
+  - component: {fileID: 956393011}
   m_Layer: 5
   m_Name: ChooseLevel
   m_TagString: Untagged
@@ -864,6 +865,22 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &956393011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956393005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82a3f40562e4da439169a4bca6f9155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dlg: 40
+  ElemanBoyutu: 40
+  istenilenAralik: 100
+  rt: {fileID: 0}
 --- !u!1 &971097815
 GameObject:
   m_ObjectHideFlags: 0
