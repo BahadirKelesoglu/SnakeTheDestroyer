@@ -8,8 +8,14 @@ using UnityEngine.UI;
 
 public class menuManage : MonoBehaviour
 {
-    [SerializeField] GameObject LButton, LPanel;
+    [SerializeField] GameObject LButton, LPanelChild, LPanel,MPanel;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        MPanel.SetActive(false);
+        LPanel.SetActive(false);
+    }
     void Start()
     {
         Sprite[] sprites = Resources.LoadAll<Sprite>("Level");
@@ -18,7 +24,7 @@ public class menuManage : MonoBehaviour
         {
             GameObject temp = Instantiate(LButton) as GameObject;
             temp.GetComponent<Image>().sprite = sprite;
-            temp.transform.SetParent(LPanel.transform, false);
+            temp.transform.SetParent(LPanelChild.transform, false);
             string sceneName = sprite.name;
             temp.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneName));
         }
@@ -33,5 +39,15 @@ public class menuManage : MonoBehaviour
     void LoadLevel(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void OpenLevelPanel()
+    {   
+        LPanel.SetActive(!LPanel.activeSelf);
+    }
+
+    public void OpenMarketPanel()
+    {
+        MPanel.SetActive(!MPanel.activeSelf);
     }
 }
