@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
     public int coin = 1500, numberOfSkins = 0, activeSkin=99;
-
+    public int[] IsSkinsActive = new int[9];
     private void Awake()
     {
         
@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
         }
         else
             Save();
+
+        
     }
 
     public void Save()

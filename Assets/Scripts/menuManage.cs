@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Security.Claims;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -50,10 +51,15 @@ public class menuManage : MonoBehaviour
         foreach (Sprite sprite in spritesPlayer)
         {
             
-            GameObject temp = Instantiate(MButton) as GameObject;
-            temp.GetComponent<Image>().sprite = sprite;           
+            GameObject temp = Instantiate(MButton) as GameObject;            
+            temp.GetComponent<Image>().sprite = sprite;
+            string skinName = temp.GetComponent<Image>().sprite.name;
+            if(!PlayerPrefs.HasKey(skinName))
+            {
+                PlayerPrefs.SetInt(skinName, 0);
+            }
             temp.transform.SetParent(MPanelChild.transform, false);
-            temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite, temp.GetComponent<Image>().sprite.name));            
+            temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite, skinName));            
 
         }
         Debug.Log(GameManager.Instance.activeSkin);
@@ -64,7 +70,7 @@ public class menuManage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        coinUI.text = "Coins: " + GameManager.Instance.coin;
     }
 
     void LoadLevel(string sceneName)
@@ -95,17 +101,23 @@ public class menuManage : MonoBehaviour
             snakeGun.GetComponent<SpriteRenderer>().sprite = sprite;
             int activeSkin = int.Parse(i);
             GameManager.Instance.activeSkin = activeSkin;
-             
-            buyButton.GetComponent<Button>().onClick.AddListener(() => buy());
+
+
+            buyButton.GetComponent<Button>().onClick.RemoveAllListeners();
+            if (PlayerPrefs.GetInt(i) == 0) { 
+            buyButton.GetComponent<Button>().onClick.AddListener(() => buy(i));
             buyButton.SetActive(true);
-            
+                
+            }
+            else
+                buyButton.SetActive(false);
         }
         else
         {
             snakeGun.GetComponent<SpriteRenderer>().sprite = emptySprite;
             GameManager.Instance.activeSkin = 99;
             
-            buyButton.GetComponent<Button>().onClick.RemoveListener(() => buy());
+            buyButton.GetComponent<Button>().onClick.RemoveListener(() => buy(i));
             buyButton.SetActive(false);
         }
 
@@ -116,8 +128,18 @@ public class menuManage : MonoBehaviour
     }
     
 
-    public void buy()
+    public void buy(string skinIndex)
     {
+        PlayerPrefs.SetInt(skinIndex, 1);
+        int IntSkinIndex = int.Parse(skinIndex);
+        buyButton.SetActive(false) ;
+        
+            GameObject skinObject = MPanelChild.transform.GetChild(IntSkinIndex).gameObject;
+            Debug.Log(skinObject.name);
+            GameObject childOfParent = skinObject.transform.GetChild(0).GetChild(0).gameObject;
+            Debug.Log(childOfParent.GetComponent<TextMeshProUGUI>().text);
+            GameManager.Instance.coin -= int.Parse(childOfParent.GetComponent<TextMeshProUGUI>().text);
+            GameManager.Instance.Save();
         
     }
 
