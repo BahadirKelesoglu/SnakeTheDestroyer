@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -41,15 +42,19 @@ public class menuManage : MonoBehaviour
 
         Sprite[] spritesPlayer = Resources.LoadAll<Sprite>("Player");
 
+        
         foreach (Sprite sprite in spritesPlayer)
         {
+            
             GameObject temp = Instantiate(MButton) as GameObject;
-            temp.GetComponent<Image>().sprite = sprite;
+            temp.GetComponent<Image>().sprite = sprite;           
             temp.transform.SetParent(MPanelChild.transform, false);
-            temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite));
+            temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite, temp.GetComponent<Image>().sprite.name));
 
         }
-        //snakeGun.GetComponent<SpriteRenderer>().sprite = spritesPlayer[0];
+        Debug.Log(GameManager.Instance.activeSkin);
+        if(GameManager.Instance.activeSkin != 99)
+        snakeGun.GetComponent<SpriteRenderer>().sprite = spritesPlayer[GameManager.Instance.activeSkin];
     }
 
     // Update is called once per frame
@@ -80,19 +85,25 @@ public class menuManage : MonoBehaviour
 
     }
 
-    public void selectGun(Sprite sprite)
+    public void selectGun(Sprite sprite,string i)
     {
         if (snakeGun.GetComponent<SpriteRenderer>().sprite != sprite) { 
             snakeGun.GetComponent<SpriteRenderer>().sprite = sprite;
+            Debug.Log(i);
+            int activeSkin = int.Parse(i);
+            GameManager.Instance.activeSkin = activeSkin;
             buyButton.SetActive(true);
         }
         else
         {
             snakeGun.GetComponent<SpriteRenderer>().sprite = emptySprite;
+            GameManager.Instance.activeSkin = 99;          
             buyButton.SetActive(false);
         }
-     
-        
-        
+
+        GameManager.Instance.Save();
+        //Debug.Log(GameManager.Instance.activeSkin);
+
+
     }
 }

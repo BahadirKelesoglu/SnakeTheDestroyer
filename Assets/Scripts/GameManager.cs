@@ -6,13 +6,15 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
-    public int coin = 0, numberOfSkins = 0, activeSkin = 0;
+    public int coin = 0, numberOfSkins = 0, activeSkin=99;
 
     private void Awake()
     {
+        
         instance = this;
         DontDestroyOnLoad(gameObject);
-        if (PlayerPrefs.HasKey("numberOfSkins"))
+        if (PlayerPrefs.HasKey("numberOfSkins") && PlayerPrefs.HasKey("activeSkin"))
+            
         {
             coin = PlayerPrefs.GetInt("coin");
             numberOfSkins = PlayerPrefs.GetInt("numberOfSkins");
