@@ -15,20 +15,24 @@ public class menuManage : MonoBehaviour
     private int coins;
     public TMP_Text coinUI;
     [SerializeField] GameObject LButton, LPanelChild, LPanel,MPanel, MPanelChild, MButton, snakeGun,buyButton;
-    private Sprite emptySprite;
+    private Sprite emptySprite;    
     // Start is called before the first frame update
 
     private void Awake()
     {
         MPanel.SetActive(false);
         LPanel.SetActive(false);
-        buyButton.SetActive(false);
-        coinUI.text = "Coins: " + coins.ToString();
+        buyButton.SetActive(false);       
         emptySprite = snakeGun.GetComponent<SpriteRenderer>().sprite;
         
+
+
+
     }
     void Start()
     {
+        coinUI.text = "Coins: " + GameManager.Instance.coin;
+
         Sprite[] sprites = Resources.LoadAll<Sprite>("Level");
 
         foreach(Sprite sprite in sprites)
@@ -49,7 +53,7 @@ public class menuManage : MonoBehaviour
             GameObject temp = Instantiate(MButton) as GameObject;
             temp.GetComponent<Image>().sprite = sprite;           
             temp.transform.SetParent(MPanelChild.transform, false);
-            temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite, temp.GetComponent<Image>().sprite.name));
+            temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite, temp.GetComponent<Image>().sprite.name));            
 
         }
         Debug.Log(GameManager.Instance.activeSkin);
@@ -89,15 +93,19 @@ public class menuManage : MonoBehaviour
     {
         if (snakeGun.GetComponent<SpriteRenderer>().sprite != sprite) { 
             snakeGun.GetComponent<SpriteRenderer>().sprite = sprite;
-            Debug.Log(i);
             int activeSkin = int.Parse(i);
             GameManager.Instance.activeSkin = activeSkin;
+             
+            buyButton.GetComponent<Button>().onClick.AddListener(() => buy());
             buyButton.SetActive(true);
+            
         }
         else
         {
             snakeGun.GetComponent<SpriteRenderer>().sprite = emptySprite;
-            GameManager.Instance.activeSkin = 99;          
+            GameManager.Instance.activeSkin = 99;
+            
+            buyButton.GetComponent<Button>().onClick.RemoveListener(() => buy());
             buyButton.SetActive(false);
         }
 
@@ -106,4 +114,12 @@ public class menuManage : MonoBehaviour
 
 
     }
+    
+
+    public void buy()
+    {
+        
+    }
+
+
 }
