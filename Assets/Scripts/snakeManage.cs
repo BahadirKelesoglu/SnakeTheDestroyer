@@ -15,7 +15,6 @@ public class snakeManage : MonoBehaviour
     List<GameObject> snakeBody = new List<GameObject>();
     float partDistance = 0.08f;
     Sprite[] spritesPlayer;
-    public GameObject snakeHead;
 
     private void Awake()
     {
@@ -80,9 +79,9 @@ public class snakeManage : MonoBehaviour
 
           if(snakeBody.Count == 0)
           {
-            GameObject head = snakeHead;
+              GameObject head = Instantiate(bodyParts[0], transform.position, transform.rotation, transform);
               snakeBody.Add(head);
-              
+              bodyParts.RemoveAt(0);
           }
 
           snakeObject snakeO = snakeBody[snakeBody.Count - 1].GetComponent<snakeObject>();
