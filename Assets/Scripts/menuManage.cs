@@ -16,7 +16,8 @@ public class menuManage : MonoBehaviour
     private int coins;
     public TMP_Text coinUI;
     [SerializeField] GameObject LButton, LPanelChild, LPanel,MPanel, MPanelChild, MButton, snakeGun,buyButton;
-    private Sprite emptySprite;    
+    private Sprite emptySprite;
+    public int score;
     // Start is called before the first frame update
 
     private void Awake()
@@ -122,7 +123,7 @@ public class menuManage : MonoBehaviour
         }
 
         GameManager.Instance.Save();
-        //Debug.Log(GameManager.Instance.activeSkin);
+        
 
 
     }
@@ -140,7 +141,6 @@ public class menuManage : MonoBehaviour
             Debug.Log(childOfParent.GetComponent<TextMeshProUGUI>().text);
             GameManager.Instance.coin -= int.Parse(childOfParent.GetComponent<TextMeshProUGUI>().text);
             GameManager.Instance.Save();
-        
     }
 
 

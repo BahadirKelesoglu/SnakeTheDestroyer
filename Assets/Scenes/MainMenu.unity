@@ -243,7 +243,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 12.736877, z: 0, w: 0}
+  m_margin: {x: 0, y: 8.005124, z: -23.658808, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2130,6 +2130,7 @@ MonoBehaviour:
   MButton: {fileID: 5379875506059605162, guid: ff0dc975860efc147aeab8f6716ea363, type: 3}
   snakeGun: {fileID: 1116774233}
   buyButton: {fileID: 1545473981}
+  score: 0
 --- !u!4 &1782810783
 Transform:
   m_ObjectHideFlags: 0
@@ -2464,9 +2465,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa155a066db725a4a83c8f993dc3d47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: 1500
+  coin: 1000
   numberOfSkins: 0
   activeSkin: 99
+  levelScore: 0
 --- !u!4 &1942260054
 Transform:
   m_ObjectHideFlags: 0

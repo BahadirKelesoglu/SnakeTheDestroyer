@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,6 +14,12 @@ public class snakeManage : MonoBehaviour
     [SerializeField] List<GameObject> bodyParts = new List<GameObject>();
     List<GameObject> snakeBody = new List<GameObject>();
     float partDistance = 0.08f;
+    Sprite[] spritesPlayer;
+
+    private void Awake()
+    {
+        spritesPlayer = Resources.LoadAll<Sprite>("Player");
+    }
 
     void Start()
     {
@@ -21,6 +28,7 @@ public class snakeManage : MonoBehaviour
     }
     void FixedUpdate()
     {
+        
         manageSnakeBody();
         
         snakeMovement();
@@ -87,7 +95,12 @@ public class snakeManage : MonoBehaviour
           {
               GameObject part = Instantiate(bodyParts[0], snakeO.snakeList[0].position, snakeO.snakeList[0].rotation,transform);
               snakeBody.Add(part);
-
+              if(snakeBody.Count % 2 == 0 && snakeBody.Count >1) 
+              {
+                int activeSkin = GameManager.Instance.activeSkin;
+                if(PlayerPrefs.GetInt(activeSkin.ToString()) == 1)
+                part.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = spritesPlayer[activeSkin];
+              }
 
               bodyParts.RemoveAt(0);
 
