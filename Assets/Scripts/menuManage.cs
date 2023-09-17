@@ -108,9 +108,14 @@ public class menuManage : MonoBehaviour
 
 
             buyButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            if (PlayerPrefs.GetInt(i) == 0) { 
-            buyButton.GetComponent<Button>().onClick.AddListener(() => buy(i));
-            buyButton.SetActive(true);
+            if (PlayerPrefs.GetInt(i) == 0) {
+                buyButton.SetActive(true);
+                //Sorry for that.There is a logic writing style in the buy func.--- It just control our coin for do we have enough to buy it.
+                if (GameManager.Instance.coin >= int.Parse(MPanelChild.transform.GetChild(int.Parse(i)).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text))
+                    buyButton.GetComponent<Button>().onClick.AddListener(() => buy(i));
+                else
+                    Debug.Log("we don't have enough money");
+            
                 
             }
             else

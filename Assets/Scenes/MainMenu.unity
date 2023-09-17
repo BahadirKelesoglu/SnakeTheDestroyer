@@ -2709,7 +2709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa155a066db725a4a83c8f993dc3d47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: 1000
+  coin: 100
   numberOfSkins: 0
   activeSkin: 99
   levelScore: 0
