@@ -15,6 +15,7 @@ public class headEat : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Food"))
         {
+            Debug.Log("yedim");
             GameManager.Instance.coin += 1;
             Destroy(other.gameObject);
             levelDesign.Instance.addScore(simplefood);

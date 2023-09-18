@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Security.Claims;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.U2D;

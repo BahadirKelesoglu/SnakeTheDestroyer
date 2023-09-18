@@ -36,7 +36,7 @@ public class levelDesign : MonoBehaviour
         {
             Transform child = transform.GetChild(i);
             
-            if(child.position.x > 15f || child.position.x < -15f || child.position.y > 15f || child.position.y < -15f)
+            if(child.position.x > 20f || child.position.x < -20f || child.position.y > 10f || child.position.y < -20f)
                 Destroy(child.gameObject);
         }
     }
@@ -45,8 +45,8 @@ public class levelDesign : MonoBehaviour
     IEnumerator spawnFood()
     {
         while (true) { 
-        float randomx = Random.Range(-14f, 14f);
-        float randomy = Random.Range(-14f, 14f);
+        float randomx = Random.Range(-20f, 20f);
+        float randomy = Random.Range(-20f, 10f);
             float randomVelocityx = Random.Range(-1f, 1f);
             float randomVelocityy = Random.Range(-1f, 1f);
 
@@ -67,5 +67,11 @@ public class levelDesign : MonoBehaviour
     public void addScore(int scorePoint)
     {
         score += scorePoint;
+        
+    }
+
+    public int getScore()
+    {
+        return score;
     }
 }
