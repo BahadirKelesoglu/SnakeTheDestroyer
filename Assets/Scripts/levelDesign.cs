@@ -55,6 +55,10 @@ public class levelDesign : MonoBehaviour
         GameObject meteor = Instantiate(foodPrefab, spawnPosition, Quaternion.identity,transform);
         Rigidbody2D meteorRB =meteor.GetComponent<Rigidbody2D>();
         meteorRB.velocity = new Vector2(randomVelocityx,randomVelocityy) * meteorSpeed;
+        Transform fireParticle = meteor.transform.GetChild(0);
+        float fireAngle = Mathf.Atan2(meteorRB.velocity.y,meteorRB.velocity.x) * Mathf.Rad2Deg;
+
+        fireParticle.rotation = Quaternion.Euler(fireAngle, -90, 0);
 
         yield return new WaitForSeconds(spawnTime);
         }
