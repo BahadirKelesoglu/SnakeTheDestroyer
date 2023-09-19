@@ -315,12 +315,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305970631}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.85, y: -6.31, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -10.780333, y: -13.94404, z: -0.21589881}
+  m_LocalScale: {x: 3.2644, y: 2.6628, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 338892667}
+  m_Father: {fileID: 929640461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &338892664
 GameObject:
@@ -360,6 +360,10 @@ MonoBehaviour:
   - {fileID: 416501491}
   - {fileID: 1942491749}
   - {fileID: 305970632}
+  shotDistance: 5
+  enemySpeed: 0.5
+  enemy1BulletPrefab: {fileID: 8611812901305374274, guid: a1c6059e5f6a8154ab1683195c637746, type: 3}
+  bulletSpeed: 5
 --- !u!212 &338892666
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -424,11 +428,7 @@ Transform:
   m_LocalPosition: {x: 29.4, y: -5.1, z: -0.24452415}
   m_LocalScale: {x: 3.2644, y: 2.6628, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1477602094}
-  - {fileID: 416501491}
-  - {fileID: 1942491749}
-  - {fileID: 305970632}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &416501490
@@ -455,12 +455,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 416501490}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.95, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -33.95757, y: 2.858229, z: -0.21589881}
+  m_LocalScale: {x: 3.2644, y: 2.6628, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 338892667}
+  m_Father: {fileID: 929640461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &434876835
 GameObject:
@@ -495,6 +495,7 @@ MonoBehaviour:
   spawnTime: 1
   scoreText: {fileID: 1348998351}
   meteorSpeed: 1
+  takenDamage: 0
 --- !u!4 &434876837
 Transform:
   m_ObjectHideFlags: 0
@@ -681,7 +682,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.59000003, y: -5.0299997, z: -10}
+  m_LocalPosition: {x: -1.0600002, y: -5.0299997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1075,6 +1076,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &929640460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 929640461}
+  m_Layer: 0
+  m_Name: enemySpawnPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &929640461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929640460}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.290392, y: -7.9582286, z: -0.02862534}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1477602094}
+  - {fileID: 416501491}
+  - {fileID: 1942491749}
+  - {fileID: 305970632}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1205625529
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,9 +1379,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: snakeHead
       objectReference: {fileID: 0}
+    - target: {fileID: 14826357850021827, guid: ac6071860c9f958479f0121919dfba3a, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5044683165901232878, guid: ac6071860c9f958479f0121919dfba3a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.48
+      value: 2.11
       objectReference: {fileID: 0}
     - target: {fileID: 5044683165901232878, guid: ac6071860c9f958479f0121919dfba3a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1460,7 +1500,7 @@ Transform:
   m_GameObject: {fileID: 1272020926}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.59000003, y: -5.0299997, z: -10}
+  m_LocalPosition: {x: -1.0600002, y: -5.0299997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1642,12 +1682,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1477602093}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.54, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 13.082431, y: 2.858229, z: -0.21589881}
+  m_LocalScale: {x: 3.2644, y: 2.6628, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 338892667}
+  m_Father: {fileID: 929640461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1527223546
 GameObject:
@@ -1930,7 +1970,7 @@ Transform:
   m_GameObject: {fileID: 1776169160}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.89, y: -1.22, z: 0}
+  m_LocalPosition: {x: -3.17, y: -1.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2058,12 +2098,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942491748}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.48, y: 6.14, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -9.572502, y: 19.207823, z: -0.21589881}
+  m_LocalScale: {x: 3.2644, y: 2.6628, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 338892667}
+  m_Father: {fileID: 929640461}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2007356294
 GameObject:
@@ -2193,5 +2233,6 @@ SceneRoots:
   - {fileID: 434876837}
   - {fileID: 1272020928}
   - {fileID: 2007356295}
+  - {fileID: 929640461}
   - {fileID: 338892667}
   - {fileID: 1527223548}

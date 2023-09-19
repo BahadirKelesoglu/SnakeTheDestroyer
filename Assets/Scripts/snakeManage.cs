@@ -15,6 +15,7 @@ public class snakeManage : MonoBehaviour
     float partDistance = 0.08f;
     Sprite[] spritesPlayer;
     public GameObject snakeHead;
+    
 
     private void Awake()
     {
@@ -32,6 +33,17 @@ public class snakeManage : MonoBehaviour
         manageSnakeBody();
         
         snakeMovement();
+    }
+
+    private void Update()
+    {
+        
+        if(levelDesign.Instance.takenDamage >= 5) { 
+            removeSnakePart();
+            Debug.Log(levelDesign.Instance.takenDamage);
+            levelDesign.Instance.takenDamage = 0;
+            
+        }
     }
 
     void manageSnakeBody()
@@ -116,4 +128,10 @@ public class snakeManage : MonoBehaviour
       {
         bodyParts.Add(part);
       }
+
+    public void removeSnakePart() 
+    {
+        int lastIndex = snakeBody.Count - 1;
+        Destroy(snakeBody[lastIndex]);
+    }
 }

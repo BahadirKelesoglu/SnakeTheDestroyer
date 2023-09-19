@@ -27,5 +27,11 @@ public class headEat : MonoBehaviour
             Debug.Log("walla değdim");
             transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z+180f);
         }
+
+        if (other.gameObject.CompareTag("enemy1Bullet"))
+        {
+            levelDesign.Instance.takenDamage += 1;
+            Destroy(other.gameObject);
+        }
     }
 }

@@ -15,6 +15,8 @@ public class levelDesign : MonoBehaviour
     private int score = 0;
     public TextMeshProUGUI scoreText;
     public float meteorSpeed = 1.0f;
+    public int takenDamage = 0;
+
 
 
     private void Awake()
