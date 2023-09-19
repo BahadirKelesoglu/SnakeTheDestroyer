@@ -33,5 +33,11 @@ public class headEat : MonoBehaviour
             levelDesign.Instance.takenDamage += 1;
             Destroy(other.gameObject);
         }
+
+        if (other.gameObject.CompareTag("Enemy1"))
+        {
+            levelDesign.Instance.takenDamage += 5;
+            Destroy(other.gameObject);
+        }
     }
 }

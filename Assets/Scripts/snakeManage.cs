@@ -38,7 +38,7 @@ public class snakeManage : MonoBehaviour
     private void Update()
     {
         
-        if(levelDesign.Instance.takenDamage >= 5) { 
+        if(levelDesign.Instance.takenDamage >= 10) { 
             removeSnakePart();
             Debug.Log(levelDesign.Instance.takenDamage);
             levelDesign.Instance.takenDamage = 0;

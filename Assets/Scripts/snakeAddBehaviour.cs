@@ -7,6 +7,8 @@ public class snakeAddBehaviour : MonoBehaviour
     public GameObject part1;
     snakeManage sm;
     private int growScore = 0;
+
+     
     private void Start()
     {
         sm = GetComponent<snakeManage>();

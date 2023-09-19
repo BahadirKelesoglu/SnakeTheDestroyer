@@ -4,19 +4,27 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
+    private static Enemy instance;
+    public static Enemy Instance { get { return instance; } }
+
     [SerializeField] GameObject enemyPrefab1;
     [SerializeField] GameObject player;
     [SerializeField] int spawnTime = 2;
     [SerializeField] Transform[] spawnPoints;
-    private List<GameObject> Enemies;
+    public List<GameObject> Enemies;
     [SerializeField] float shotDistance = 5f;
     public RaycastHit hit;
     [SerializeField] float enemySpeed = 0.5f;
     [SerializeField] GameObject enemy1BulletPrefab;
     private List<float> shootingCooldowns;
     [SerializeField] float bulletSpeed = 5f;
-    private bool canShoot = true;
+    [SerializeField] int enemyHealth = 10;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         Enemies = new List<GameObject>();
@@ -74,9 +82,10 @@ public class Enemy : MonoBehaviour
 
     IEnumerator spawnEnemy()
     {
-        while (Enemies.Count < 15)
+        while (true)
         {
-                        
+            if(Enemies.Count < 15) {
+                Debug.Log(Enemies.Count);          
             int randomSpawnPoint = Random.Range(0, 4);
             GameObject enemy1;
             if(randomSpawnPoint < 2) 
@@ -95,6 +104,7 @@ public class Enemy : MonoBehaviour
             Enemies.Add(enemy1);
             shootingCooldowns.Add(0f);
 
+            }
             yield return new WaitForSeconds(spawnTime);
         }
     }
