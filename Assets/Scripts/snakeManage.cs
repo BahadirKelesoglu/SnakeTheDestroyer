@@ -15,7 +15,11 @@ public class snakeManage : MonoBehaviour
     float partDistance = 0.08f;
     Sprite[] spritesPlayer;
     public GameObject snakeHead;
-    
+
+    private Vector2 touchDirection;
+    public Joystick joystick;
+    float GameobjectRotation;
+
 
     private void Awake()
     {
@@ -37,8 +41,10 @@ public class snakeManage : MonoBehaviour
 
     private void Update()
     {
-        
-        if(levelDesign.Instance.takenDamage >= 10) { 
+         GameobjectRotation = joystick.Horizontal;
+
+
+        if (levelDesign.Instance.takenDamage >= 10) { 
             removeSnakePart();
             Debug.Log(levelDesign.Instance.takenDamage);
             levelDesign.Instance.takenDamage = 0;
@@ -69,10 +75,25 @@ public class snakeManage : MonoBehaviour
     {
 
         snakeBody[0].GetComponent<Rigidbody2D>().velocity = snakeBody[0].transform.right * speed * Time.deltaTime;
-        if(Input.GetAxis("Horizontal") != 0)
-            snakeBody[0].transform.Rotate(new Vector3 (0, 0, -rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal")));
+
         
-        if(snakeBody.Count > 1) //Every part take the position of the next part, thanks to that, they follow next part
+         
+             snakeBody[0].transform.Rotate(new Vector3 (0, 0, -rotateSpeed * Time.deltaTime * GameobjectRotation));
+
+       
+
+       /* else
+        {
+            // Use keyboard input for rotation if no touch input
+            if (Input.GetAxis("Horizontal") != 0)
+            {
+                snakeBody[0].transform.Rotate(new Vector3(0, 0, -rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal")));
+            }
+        }*/
+
+
+
+        if (snakeBody.Count > 1) //Every part take the position of the next part, thanks to that, they follow next part
         { 
             for( int i = 1; i<snakeBody.Count; i++ )
             {
