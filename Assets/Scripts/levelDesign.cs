@@ -14,13 +14,16 @@ public class levelDesign : MonoBehaviour
     public float spawnTime = 1.0f;
     private int score = 0;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI coinText;
     public float meteorSpeed = 1.0f;
     public int takenDamage = 0;
+    
 
 
 
     private void Awake()
     {
+        
         instance = this;
         score = 0;
     }
@@ -33,6 +36,7 @@ public class levelDesign : MonoBehaviour
     private void Update()
     {
         scoreText.text = "Score: " + score;
+        coinText.text = "Coin:" + GameManager.Instance.coin;
 
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -76,4 +80,6 @@ public class levelDesign : MonoBehaviour
     {
         return score;
     }
+
+
 }

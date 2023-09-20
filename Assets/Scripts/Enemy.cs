@@ -17,8 +17,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] float enemySpeed = 0.5f;
     [SerializeField] GameObject enemy1BulletPrefab;
     private List<float> shootingCooldowns;
+    public List <int> enemyHealthList;
     [SerializeField] float bulletSpeed = 5f;
-    [SerializeField] int enemyHealth = 10;
+    public int enemyHealth = 10;
+    
+
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -29,6 +33,7 @@ public class Enemy : MonoBehaviour
     {
         Enemies = new List<GameObject>();
         shootingCooldowns = new List<float>();
+        enemyHealthList = new List<int>();
         StartCoroutine(spawnEnemy());
     }
 
@@ -103,6 +108,7 @@ public class Enemy : MonoBehaviour
             }
             Enemies.Add(enemy1);
             shootingCooldowns.Add(0f);
+            enemyHealthList.Add(enemyHealth);
 
             }
             yield return new WaitForSeconds(spawnTime);

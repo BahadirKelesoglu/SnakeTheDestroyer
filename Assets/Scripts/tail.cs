@@ -10,6 +10,14 @@ public class tail : MonoBehaviour
     public GameObject bulletPrefab;
     [SerializeField] float shootWait = 0.8f;
     [SerializeField] float bulletSpeed = 10f;
+    private ParticleSystem shootEffect;
+    private Animator animator;
+
+    private void Awake()
+    {
+        shootEffect = transform.GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
+    }
     private void Start()
     {
 
@@ -36,13 +44,18 @@ public class tail : MonoBehaviour
             if(shootWait >= 0.8f) 
             {
                 ShootBullet(nearestEnemy);
+                shootEffect.Play();
+                animator.SetBool("isFired", true);
                 shootWait = 0f;
             }
-            else
+                else { 
                 shootWait += Time.deltaTime;
+                animator.SetBool("isFired", false);
+                }
+            }
         }
-        }
-
+        else
+            animator.SetBool("isFired", false);
     }
 
 
@@ -90,6 +103,8 @@ public class tail : MonoBehaviour
         bullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+
+        
 
         Destroy(bullet, 2f);
     }
