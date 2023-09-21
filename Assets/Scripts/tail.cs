@@ -103,10 +103,12 @@ public class tail : MonoBehaviour
         bullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        if(nearestEnemy == null)
+            Destroy(bullet);
 
         
 
-        Destroy(bullet, 2f);
+        Destroy(bullet, 1f);
     }
 
     }

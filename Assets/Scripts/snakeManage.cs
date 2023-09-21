@@ -8,15 +8,16 @@ using UnityEngine.UIElements;
 public class snakeManage : MonoBehaviour
 {
     float countup = 0f;
-    [SerializeField] float speed = 200f;
+    private float speed = 180f;
+    public float scoreSpeed = 1;
     [SerializeField] float rotateSpeed = 180f;
     [SerializeField] List<GameObject> bodyParts = new List<GameObject>();
     List<GameObject> snakeBody = new List<GameObject>();
-    float partDistance = 0.08f;
+    public float partDistance = 0.08f;
     Sprite[] spritesPlayer;
     public GameObject snakeHead;
 
-    private Vector2 touchDirection;
+    
     public Joystick joystick;
     float GameobjectRotation;
 
@@ -30,6 +31,7 @@ public class snakeManage : MonoBehaviour
     {
         
         CreateBodyParts();
+        
     }
     void FixedUpdate()
     {
@@ -41,15 +43,27 @@ public class snakeManage : MonoBehaviour
 
     private void Update()
     {
-         GameobjectRotation = joystick.Horizontal;
-
+        GameobjectRotation = joystick.Horizontal;
+        
+         
 
         if (levelDesign.Instance.takenDamage >= 10) { 
             removeSnakePart();
+            if(levelDesign.Instance.getScore() > 1) { 
+            levelDesign.Instance.addScore(-1);
+                transform.GetComponent<snakeAddBehaviour>().growScore += -1;
+            }
             Debug.Log(levelDesign.Instance.takenDamage);
             levelDesign.Instance.takenDamage = 0;
             
         }
+
+        if(Time.timeScale == 0)
+        {
+            joystick.gameObject.SetActive(false);
+        }
+        else
+            joystick.gameObject.SetActive(true);
     }
 
     void manageSnakeBody()
@@ -80,16 +94,13 @@ public class snakeManage : MonoBehaviour
          
              snakeBody[0].transform.Rotate(new Vector3 (0, 0, -rotateSpeed * Time.deltaTime * GameobjectRotation));
 
-       
 
-       /* else
-        {
-            // Use keyboard input for rotation if no touch input
-            if (Input.GetAxis("Horizontal") != 0)
-            {
-                snakeBody[0].transform.Rotate(new Vector3(0, 0, -rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal")));
-            }
-        }*/
+
+
+        // Use keyboard input for rotation if no touch input
+        if (Input.GetAxis("Horizontal") != 0)
+            snakeBody[0].transform.Rotate(new Vector3(0, 0, -rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal")));
+
 
 
 

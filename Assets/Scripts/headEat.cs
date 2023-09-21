@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class headEat : MonoBehaviour
 {
-    int simplefood = 1;
+    public int simplefood = 1;
 
 
     private void Start()

@@ -16,6 +16,8 @@ public class menuManage : MonoBehaviour
     [SerializeField] GameObject LButton, LPanelChild, LPanel,MPanel, MPanelChild, MButton, snakeGun,buyButton;
     private Sprite emptySprite;
     public int score;
+    int priceOfSkins = 0;
+    int levelName = 1;
     // Start is called before the first frame update
 
     private void Awake()
@@ -40,6 +42,8 @@ public class menuManage : MonoBehaviour
             GameObject temp = Instantiate(LButton) as GameObject;
             temp.GetComponent<Image>().sprite = sprite;
             temp.transform.SetParent(LPanelChild.transform, false);
+            temp.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Level " + levelName.ToString();
+            levelName++;
             string sceneName = sprite.name;
             temp.GetComponent<Button>().onClick.AddListener(() => LoadLevel(sceneName));
         }
@@ -57,7 +61,13 @@ public class menuManage : MonoBehaviour
             {
                 PlayerPrefs.SetInt(skinName, 0);
             }
+            else if(PlayerPrefs.GetInt(skinName) == 1)
+            {
+                temp.transform.GetChild(0).gameObject.SetActive(false);
+            }
             temp.transform.SetParent(MPanelChild.transform, false);
+            priceOfSkins += 100;
+            temp.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = priceOfSkins.ToString();
             temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite, skinName));            
 
         }
@@ -116,8 +126,10 @@ public class menuManage : MonoBehaviour
             
                 
             }
-            else
+            else 
                 buyButton.SetActive(false);
+
+            
         }
         else
         {
@@ -147,7 +159,10 @@ public class menuManage : MonoBehaviour
             Debug.Log(skinObject.name);
             GameObject childOfParent = skinObject.transform.GetChild(0).GetChild(0).gameObject;
             Debug.Log(childOfParent.GetComponent<TextMeshProUGUI>().text);
+            skinObject.transform.GetChild(0).gameObject.SetActive(false);
             GameManager.Instance.coin -= int.Parse(childOfParent.GetComponent<TextMeshProUGUI>().text);
+            
+
             GameManager.Instance.Save();
     }
 
