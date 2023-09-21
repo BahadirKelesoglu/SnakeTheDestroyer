@@ -17,6 +17,9 @@ public class snakeManage : MonoBehaviour
     Sprite[] spritesPlayer;
     public GameObject snakeHead;
 
+    public GameObject pausePanel;
+    public GameObject resumeButton;
+
     
     public Joystick joystick;
     float GameobjectRotation;
@@ -49,7 +52,7 @@ public class snakeManage : MonoBehaviour
 
         if (levelDesign.Instance.takenDamage >= 10) { 
             removeSnakePart();
-            if(levelDesign.Instance.getScore() > 1) { 
+            if(levelDesign.Instance.getScore() > 1 && levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
             levelDesign.Instance.addScore(-1);
                 transform.GetComponent<snakeAddBehaviour>().growScore += -1;
             }
@@ -57,8 +60,17 @@ public class snakeManage : MonoBehaviour
             levelDesign.Instance.takenDamage = 0;
             
         }
+        if (snakeBody[0] != null) { 
+        if (snakeBody[0].name != "snakeHead")
+        {
+            pausePanel.SetActive(true);
+            resumeButton.SetActive(false);
+            Time.timeScale = 0;
+        }
+        }
 
-        if(Time.timeScale == 0)
+
+        if (Time.timeScale == 0)
         {
             joystick.gameObject.SetActive(false);
         }

@@ -9,14 +9,20 @@ public class levelDesign : MonoBehaviour
     private static levelDesign instance;
     public static levelDesign Instance { get { return instance; } }
 
-
+    public GameObject[] laserBorders;
+    public GameObject endGameBorder;
+    public GameObject beginningBorder;
+    public GameObject blackHole;
     public GameObject foodPrefab;
+    public GameObject runArrow;
+    private bool arrowSetActiveFlag = false;
     public float spawnTime = 1.0f;
-    private int score = 0;
+    [SerializeField] int score = 0;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinText;
     public float meteorSpeed = 1.0f;
     public int takenDamage = 0;
+    public int BossTime = 5;
     
 
 
@@ -30,6 +36,16 @@ public class levelDesign : MonoBehaviour
 
     void Start()
     {
+        endGameBorder.SetActive(false);
+        beginningBorder.SetActive(true);
+        blackHole.SetActive(false);
+        runArrow.SetActive(false);
+
+        foreach (GameObject laser in laserBorders)
+        {
+            laser.SetActive(true);
+        }
+
         StartCoroutine(spawnFood());
     }
 
@@ -45,12 +61,27 @@ public class levelDesign : MonoBehaviour
             if(child.position.x > 20f || child.position.x < -20f || child.position.y > 10f || child.position.y < -20f)
                 Destroy(child.gameObject);
         }
+       
+
+        if(score >= BossTime)
+        {
+            blackHole.SetActive(true);
+            if(!arrowSetActiveFlag)
+            runArrow.SetActive(true);
+            arrowSetActiveFlag = true;
+            endGameBorder.SetActive(true);
+            beginningBorder?.SetActive(false);
+            foreach(GameObject laser in laserBorders)
+            {
+                laser.SetActive(false);
+            }
+        }
     }
 
 
     IEnumerator spawnFood()
     {
-        while (true) { 
+        while (score < BossTime) { 
         float randomx = Random.Range(-20f, 20f);
         float randomy = Random.Range(-20f, 10f);
             float randomVelocityx = Random.Range(-1f, 1f);

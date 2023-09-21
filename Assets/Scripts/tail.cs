@@ -43,11 +43,13 @@ public class tail : MonoBehaviour
         {
             if(shootWait >= 0.8f) 
             {
+                if(levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
                 ShootBullet(nearestEnemy);
                 shootEffect.Play();
                 animator.SetBool("isFired", true);
                 shootWait = 0f;
-            }
+                    }
+                }
                 else { 
                 shootWait += Time.deltaTime;
                 animator.SetBool("isFired", false);
