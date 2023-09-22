@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 public class menuManage : MonoBehaviour
 {
+
     private int coins;
     public TMP_Text coinUI;
     [SerializeField] GameObject LButton, LPanelChild, LPanel,MPanel, MPanelChild, MButton, snakeGun,buyButton;
@@ -22,6 +23,8 @@ public class menuManage : MonoBehaviour
 
     private void Awake()
     {
+        
+        
         MPanel.SetActive(false);
         LPanel.SetActive(false);
         buyButton.SetActive(false);       

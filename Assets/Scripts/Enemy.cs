@@ -25,6 +25,9 @@ public class Enemy : MonoBehaviour
     public GameObject vCamera;
     private bool shouldShowEnemyBoss = false;
     private float coolDownEnemyBoss = 2f;
+
+    
+    
     
 
 
@@ -68,6 +71,7 @@ public class Enemy : MonoBehaviour
                 {
                     if (shootingCooldowns[i] <= 0f)
                     {
+                        Enemies[i].GetComponent<AudioSource>().Play();
                         ShootBullet(Enemies[i].transform.position, enemy1BulletPrefab);
                         shootingCooldowns[i] = 1f;
                     }
@@ -106,15 +110,17 @@ public class Enemy : MonoBehaviour
             {
                 // Calculate the velocity vector
                 Vector3 velocity = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * 3f;
+                    shakeCam.Instance.shakeCamera();
 
-                // Update the enemy's position based on the calculated velocity
-                transform.position += velocity * Time.deltaTime;
+                    // Update the enemy's position based on the calculated velocity
+                    transform.position += velocity * Time.deltaTime;
 
                 if (!shouldShowEnemyBoss)
                     StartCoroutine(ShowEnemyBoss());
 
                 if (coolDownEnemyBoss <= 1f)
                 {
+                        transform.GetComponent<AudioSource>().Play();
                     for(int i = 0; i < transform.childCount; i++)
                     ShootBullet(transform.GetChild(i).position,enemyBoss1BulletPrefab);
                     coolDownEnemyBoss = 2f;
@@ -161,6 +167,7 @@ public class Enemy : MonoBehaviour
 
     void ShootBullet(Vector3 spawnPosition, GameObject bulletPrefab)
     {
+        
         // Instantiate a bullet at the enemy's position
         GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
 

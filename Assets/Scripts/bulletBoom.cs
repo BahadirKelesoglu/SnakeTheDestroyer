@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class bulletBoom : MonoBehaviour
 {
     public int damage = 2;
+    [SerializeField] AudioSource boomSound;
     
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -14,6 +15,7 @@ public class bulletBoom : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy1"))
         {
 
+            boomSound.Play();
             
             int enemyIndex = Enemy.Instance.Enemies.IndexOf(other.gameObject);
 

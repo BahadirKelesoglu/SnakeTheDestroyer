@@ -12,6 +12,9 @@ public class tail : MonoBehaviour
     [SerializeField] float bulletSpeed = 10f;
     private ParticleSystem shootEffect;
     private Animator animator;
+    [SerializeField] AudioSource shootSound;
+    [SerializeField] AudioClip shootSoundClip;
+    [SerializeField] AudioClip takenDamageClip;
 
     private void Awake()
     {
@@ -46,6 +49,8 @@ public class tail : MonoBehaviour
                 if(levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
                 ShootBullet(nearestEnemy);
                 shootEffect.Play();
+                shootSound.clip = shootSoundClip;
+                shootSound.Play();
                 animator.SetBool("isFired", true);
                 shootWait = 0f;
                     }
@@ -67,6 +72,11 @@ public class tail : MonoBehaviour
         {
             levelDesign.Instance.takenDamage += 1;
             Destroy(other.gameObject);
+
+            shootSound.clip = takenDamageClip;
+            shootSound.Play();
+            shakeCam.Instance.shakeCamera();
+
         }
 
         

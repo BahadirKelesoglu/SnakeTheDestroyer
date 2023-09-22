@@ -27,6 +27,14 @@ public class snakeManage : MonoBehaviour
     float GameobjectRotation;
 
 
+
+    private bool animationFlag = true;
+    private bool loseFlag = true;
+    [SerializeField] AudioClip LoseSound;
+
+    
+
+
     private void Awake()
     {
         spritesPlayer = Resources.LoadAll<Sprite>("Player");
@@ -48,6 +56,13 @@ public class snakeManage : MonoBehaviour
 
     private void Update()
     {
+        if (transform.GetComponent<Animator>().GetBool("Finish") && animationFlag)
+        {
+            transform.GetComponent<AudioSource>().Play();
+            animationFlag = false;
+        }
+        
+
         GameobjectRotation = joystick.Horizontal;
         
          
@@ -69,9 +84,15 @@ public class snakeManage : MonoBehaviour
                 pausePanel.SetActive(true);
             resumeButton.SetActive(false);
             winOrLoseText.text = "LOSE";
-            
-                //Kaybettin YAZISI
-        }
+                if (loseFlag)
+                {
+                    transform.GetComponent<AudioSource>().clip = LoseSound;
+                    transform.GetComponent<AudioSource>().Play();
+                    loseFlag = false;
+                }
+
+
+            }
         }
         else
         {
@@ -79,6 +100,13 @@ public class snakeManage : MonoBehaviour
             pausePanel.SetActive(true);
             resumeButton.SetActive(false);
             winOrLoseText.text = "LOSE";
+            if (loseFlag) { 
+            transform.GetComponent<AudioSource>().clip = LoseSound;
+            transform.GetComponent<AudioSource>().Play();
+                loseFlag = false;
+            }
+
+
         }
 
 
