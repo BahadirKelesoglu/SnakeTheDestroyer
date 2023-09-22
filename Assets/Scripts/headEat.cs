@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class headEat : MonoBehaviour
@@ -7,6 +8,7 @@ public class headEat : MonoBehaviour
     public int simplefood = 1;
     public GameObject MenuPanel;
     public GameObject ContinueButton;
+    public TextMeshProUGUI winOrLoseText;
 
 
     private void Start()
@@ -53,6 +55,7 @@ public class headEat : MonoBehaviour
             MenuPanel.SetActive(true);
             ContinueButton.SetActive(false);
             Time.timeScale = 0f;
+            winOrLoseText.text = "WIN";
 
         }
     }

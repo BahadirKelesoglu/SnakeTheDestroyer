@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,8 +20,9 @@ public class snakeManage : MonoBehaviour
 
     public GameObject pausePanel;
     public GameObject resumeButton;
+    public TextMeshProUGUI winOrLoseText;
 
-    
+
     public Joystick joystick;
     float GameobjectRotation;
 
@@ -52,9 +54,9 @@ public class snakeManage : MonoBehaviour
 
         if (levelDesign.Instance.takenDamage >= 10) { 
             removeSnakePart();
-            if(levelDesign.Instance.getScore() > 1 && levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
-            levelDesign.Instance.addScore(-1);
-                transform.GetComponent<snakeAddBehaviour>().growScore += -1;
+            if(levelDesign.Instance.getScore() > levelDesign.Instance.growPoint && levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
+            levelDesign.Instance.addScore(-2);
+                transform.GetComponent<snakeAddBehaviour>().growScore += -levelDesign.Instance.growPoint;
             }
             Debug.Log(levelDesign.Instance.takenDamage);
             levelDesign.Instance.takenDamage = 0;
@@ -63,10 +65,20 @@ public class snakeManage : MonoBehaviour
         if (snakeBody[0] != null) { 
         if (snakeBody[0].name != "snakeHead")
         {
+                Time.timeScale = 0;
+                pausePanel.SetActive(true);
+            resumeButton.SetActive(false);
+            winOrLoseText.text = "LOSE";
+            
+                //Kaybettin YAZISI
+        }
+        }
+        else
+        {
+            Time.timeScale = 0;
             pausePanel.SetActive(true);
             resumeButton.SetActive(false);
-            Time.timeScale = 0;
-        }
+            winOrLoseText.text = "LOSE";
         }
 
 

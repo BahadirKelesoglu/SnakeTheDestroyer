@@ -14,17 +14,25 @@ public class levelDesign : MonoBehaviour
     public GameObject beginningBorder;
     public GameObject blackHole;
     public GameObject foodPrefab;
+    public GameObject runText;
+
+
     public GameObject runArrow;
+    public GameObject asteroidPrefab;
+    private float asteroidTime = 1f;
+
     private bool arrowSetActiveFlag = false;
+    private bool asteroidFlag = false;
     public float spawnTime = 1.0f;
     [SerializeField] int score = 0;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI coinText;
     public float meteorSpeed = 1.0f;
     public int takenDamage = 0;
+    public int growPoint = 2;
     public int BossTime = 5;
     
-
+    
 
 
     private void Awake()
@@ -65,6 +73,8 @@ public class levelDesign : MonoBehaviour
 
         if(score >= BossTime)
         {
+
+            runText.SetActive(true);
             blackHole.SetActive(true);
             if(!arrowSetActiveFlag)
             runArrow.SetActive(true);
@@ -75,6 +85,27 @@ public class levelDesign : MonoBehaviour
             {
                 laser.SetActive(false);
             }
+            
+
+            if (!asteroidFlag)
+            {
+                
+                spawnAsteroid();
+                asteroidFlag = true;
+                asteroidTime = 1f;
+
+            }
+            else
+            {
+                
+                asteroidTime -= Time.deltaTime;
+                if(asteroidTime < 0) {
+                    
+                    asteroidFlag = false;
+                    
+                }
+            }
+
         }
     }
 
@@ -100,6 +131,26 @@ public class levelDesign : MonoBehaviour
         yield return new WaitForSeconds(spawnTime);
         }
     }
+
+    void spawnAsteroid()
+    {
+
+        
+        float randomx = Random.Range(-90f, -20f);
+        float randomy = Random.Range(-20f, 10f);
+        float randomVelocityx = Random.Range(-0.5f, 0.5f);
+        float randomVelocityy = Random.Range(-0.5f, 0.5f);
+
+        Vector3 spawnPosition = new Vector3(randomx, randomy, 0f);
+
+        GameObject meteor = Instantiate(asteroidPrefab, spawnPosition, Quaternion.identity);
+        Rigidbody2D meteorRB = meteor.GetComponent<Rigidbody2D>();
+        meteorRB.velocity = new Vector2(randomVelocityx, randomVelocityy) * meteorSpeed;
+            
+          
+        
+        
+    }   
 
     public void addScore(int scorePoint)
     {

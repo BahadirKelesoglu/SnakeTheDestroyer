@@ -11,7 +11,7 @@ public class snakeAddBehaviour : MonoBehaviour
      
     private void Start()
     {
-        growScore = 1;
+        growScore = levelDesign.Instance.growPoint;
         sm = GetComponent<snakeManage>();
     }
     // Update is called once per frame
@@ -21,7 +21,7 @@ public class snakeAddBehaviour : MonoBehaviour
         if (levelDesign.Instance.getScore() >= growScore)
         {        
                 sm.addBodyPart(part1);
-                growScore = levelDesign.Instance.getScore()+1;
+                growScore = levelDesign.Instance.getScore()+ levelDesign.Instance.growPoint;
         }
 
     }

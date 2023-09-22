@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < Enemies.Count; i++)
          {
-            if (Enemies[i] != null)
+            if (Enemies[i] != null && player !=null)
             {
 
                 // Calculate the direction to the player
@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
             if (true)
             {
                 // Calculate the velocity vector
-                Vector3 velocity = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * 1.5f;
+                Vector3 velocity = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * 3f;
 
                 // Update the enemy's position based on the calculated velocity
                 transform.position += velocity * Time.deltaTime;
@@ -141,13 +141,13 @@ public class Enemy : MonoBehaviour
             {
                 float randomY = Random.Range(-10, 10);
                 Vector3 enemyPosition = new Vector2(spawnPoints[randomSpawnPoint].position.x, spawnPoints[randomSpawnPoint].position.y + randomY);
-                enemy1 = Instantiate(enemyPrefab1, enemyPosition, Quaternion.identity, transform);
+                enemy1 = Instantiate(enemyPrefab1, enemyPosition, Quaternion.identity);
             }
             else
             {
                 float randomX = Random.Range(-10, 10);
                 Vector3 enemyPosition = new Vector2(spawnPoints[randomSpawnPoint].position.x + randomX, spawnPoints[randomSpawnPoint].position.y);
-                enemy1 = Instantiate(enemyPrefab1, enemyPosition, Quaternion.identity, transform);
+                enemy1 = Instantiate(enemyPrefab1, enemyPosition, Quaternion.identity);
                 
             }
             Enemies.Add(enemy1);
@@ -181,13 +181,15 @@ public class Enemy : MonoBehaviour
 
     IEnumerator ShowEnemyBoss()
     {
-        Time.timeScale = 0f;
+
         foreach (GameObject obj in Enemies)
         {
             Destroy(obj);
         }
         Enemies.Clear();
 
+
+        Time.timeScale = 0f;
         // Disable the virtual camera's follow.
         vCamera.GetComponent<CinemachineVirtualCamera>().Follow = null;
 
