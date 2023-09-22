@@ -17,6 +17,7 @@ public class snakeManage : MonoBehaviour
     public float partDistance = 0.08f;
     Sprite[] spritesPlayer;
     public GameObject snakeHead;
+    private int tailOrderSize = 2;
 
     public GameObject pausePanel;
     public GameObject resumeButton;
@@ -93,6 +94,7 @@ public class snakeManage : MonoBehaviour
 
 
             }
+            
         }
         else
         {
@@ -191,6 +193,8 @@ public class snakeManage : MonoBehaviour
           {
               GameObject part = Instantiate(bodyParts[0], snakeO.snakeList[0].position, snakeO.snakeList[0].rotation,transform);
               snakeBody.Add(part);
+            part.GetComponent<SpriteRenderer>().sortingOrder = tailOrderSize;
+            tailOrderSize++;
               if(snakeBody.Count % 4 == 0 && snakeBody.Count >1) 
               {
                 int activeSkin = GameManager.Instance.activeSkin;

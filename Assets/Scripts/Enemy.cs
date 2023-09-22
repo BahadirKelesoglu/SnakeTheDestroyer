@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject enemyBoss1BulletPrefab;
     private List<float> shootingCooldowns;
     public List <int> enemyHealthList;
-    [SerializeField] float bulletSpeed = 5f;
+    //[SerializeField] float bulletSpeed = 5f;
     public int enemyHealth = 10;
     public GameObject vCamera;
     private bool shouldShowEnemyBoss = false;
@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour
                     if (shootingCooldowns[i] <= 0f)
                     {
                         Enemies[i].GetComponent<AudioSource>().Play();
-                        ShootBullet(Enemies[i].transform.position, enemy1BulletPrefab);
+                        ShootBullet(Enemies[i].transform.position, enemy1BulletPrefab,5);
                         shootingCooldowns[i] = 1f;
                     }
                     else
@@ -122,8 +122,8 @@ public class Enemy : MonoBehaviour
                 {
                         transform.GetComponent<AudioSource>().Play();
                     for(int i = 0; i < transform.childCount; i++)
-                    ShootBullet(transform.GetChild(i).position,enemyBoss1BulletPrefab);
-                    coolDownEnemyBoss = 2f;
+                    ShootBullet(transform.GetChild(i).position,enemyBoss1BulletPrefab,10);
+                    coolDownEnemyBoss = 4f;
                 }
                 else
                     coolDownEnemyBoss -= Time.deltaTime;
@@ -165,7 +165,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void ShootBullet(Vector3 spawnPosition, GameObject bulletPrefab)
+    void ShootBullet(Vector3 spawnPosition, GameObject bulletPrefab, int bulletSpeed)
     {
         
         // Instantiate a bullet at the enemy's position
@@ -249,6 +249,16 @@ public class Enemy : MonoBehaviour
         shouldShowEnemyBoss = true;
         Time.timeScale = 1f;
         vCamera.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("wall"))
+        {
+            transform.GetComponent<AudioSource>().Play();
+            transform.Find("shootArea (2)").GetComponent<ParticleSystem>().Play();
+            Destroy(collision.gameObject);
+        }
     }
 
 

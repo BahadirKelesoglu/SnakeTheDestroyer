@@ -15,7 +15,7 @@ public class bulletBoom : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy1"))
         {
 
-            boomSound.Play();
+            //boomSound.Play();
             
             int enemyIndex = Enemy.Instance.Enemies.IndexOf(other.gameObject);
 
