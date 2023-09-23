@@ -19,11 +19,13 @@ public class pauseButtons : MonoBehaviour
         {
             Time.timeScale = 1f;
             pausePanel.SetActive(false);
+            GameManager.Instance.isMenuActive = false;
         }
         else
         {
             Time.timeScale = 0f;
             pausePanel.SetActive(true);
+            GameManager.Instance.isMenuActive = true;
         }
     }
 

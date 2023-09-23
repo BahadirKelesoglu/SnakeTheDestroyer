@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 6
   m_Sprite: {fileID: -292514184, guid: 16d2f99db260b3d4c83b6a1380feccde, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   ContinueButton: {fileID: 0}
   winOrLoseText: {fileID: 0}
   getDamage: {fileID: 3617986169964472067}
+  WinSound: {fileID: 0}
 --- !u!70 &7439887991746083287
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -189,7 +190,7 @@ AudioSource:
   m_GameObject: {fileID: 14826357850021827}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7282763378205074072, guid: 0dcf94d597d29db4eaf661500742fd44, type: 2}
   m_audioClip: {fileID: 8300000, guid: e2d0ab9e22bd1f24f8179a67f0d38a98, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1

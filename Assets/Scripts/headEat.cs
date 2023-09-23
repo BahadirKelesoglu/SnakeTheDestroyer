@@ -47,6 +47,14 @@ public class headEat : MonoBehaviour
             shakeCam.Instance.shakeCamera();
         }
 
+        if (other.gameObject.CompareTag("EnemyBossBullet"))
+        {
+            levelDesign.Instance.takenDamage += 5;
+            Destroy(other.gameObject);
+            getDamage.Play();
+            shakeCam.Instance.shakeCamera();
+        }
+
         if (other.gameObject.CompareTag("Enemy1"))
         {
             levelDesign.Instance.takenDamage += 5;

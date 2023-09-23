@@ -26,6 +26,7 @@ public class snakeManage : MonoBehaviour
 
     public Joystick joystick;
     float GameobjectRotation;
+    float HorizontalInput;
 
 
 
@@ -65,6 +66,7 @@ public class snakeManage : MonoBehaviour
         
 
         GameobjectRotation = joystick.Horizontal;
+        HorizontalInput = Input.GetAxis("Horizontal");
         
          
 
@@ -144,16 +146,19 @@ public class snakeManage : MonoBehaviour
 
         snakeBody[0].GetComponent<Rigidbody2D>().velocity = snakeBody[0].transform.right * speed * Time.deltaTime;
 
-        
-         
-             snakeBody[0].transform.Rotate(new Vector3 (0, 0, -rotateSpeed * Time.deltaTime * GameobjectRotation));
+
+
+        Debug.Log(HorizontalInput);
+        if (HorizontalInput != 0)
+            snakeBody[0].transform.Rotate(new Vector3(0, 0, -rotateSpeed * Time.deltaTime * HorizontalInput));
+        else
+        snakeBody[0].transform.Rotate(new Vector3 (0, 0, -rotateSpeed * Time.deltaTime * GameobjectRotation));
 
 
 
 
         // Use keyboard input for rotation if no touch input
-        if (Input.GetAxis("Horizontal") != 0)
-            snakeBody[0].transform.Rotate(new Vector3(0, 0, -rotateSpeed * Time.deltaTime * Input.GetAxis("Horizontal")));
+
 
 
 

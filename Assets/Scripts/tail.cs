@@ -79,7 +79,18 @@ public class tail : MonoBehaviour
 
         }
 
-        
+        if (other.gameObject.CompareTag("EnemyBossBullet"))
+        {
+            levelDesign.Instance.takenDamage += 5;
+            Destroy(other.gameObject);
+
+            shootSound.clip = takenDamageClip;
+            shootSound.Play();
+            shakeCam.Instance.shakeCamera();
+
+        }
+
+
     }
 
 

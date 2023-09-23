@@ -48,6 +48,7 @@ public class levelDesign : MonoBehaviour
         beginningBorder.SetActive(true);
         blackHole.SetActive(false);
         runArrow.SetActive(false);
+        GameManager.Instance.isMenuActive = false;
 
         foreach (GameObject laser in laserBorders)
         {

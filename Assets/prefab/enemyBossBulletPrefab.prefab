@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7321069860195913639}
   m_Layer: 0
   m_Name: enemyBossBulletPrefab
-  m_TagString: enemy1Bullet
+  m_TagString: EnemyBossBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,8 +93,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.2266414, y: -0.09585123}
-  m_Size: {x: 1.3666042, y: 1.0291444}
+  m_Offset: {x: -0.23783748, y: -0.09025042}
+  m_Size: {x: 1.389019, y: 0.8387469}
   m_Direction: 1
 --- !u!1001 &9073888113346277689
 PrefabInstance:
