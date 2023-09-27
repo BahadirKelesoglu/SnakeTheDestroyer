@@ -32,7 +32,7 @@ public class bulletBoom : MonoBehaviour
                     Enemy.Instance.enemyHealthList.RemoveAt(enemyIndex);
                     Enemy.Instance.Enemies.RemoveAt(enemyIndex);
                 }
-
+                else
                 other.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().fillAmount = (float)Enemy.Instance.enemyHealthList[enemyIndex] / (float)Enemy.Instance.enemyHealth;
             }
             

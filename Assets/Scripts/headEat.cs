@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class headEat : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class headEat : MonoBehaviour
         if (other.gameObject.CompareTag("Food"))
         {
             
-            GameManager.Instance.coin += 1;
+            
             Destroy(other.gameObject);
             levelDesign.Instance.addScore(simplefood);
             GameManager.Instance.Save();

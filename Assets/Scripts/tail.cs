@@ -16,6 +16,14 @@ public class tail : MonoBehaviour
     [SerializeField] AudioClip shootSoundClip;
     [SerializeField] AudioClip takenDamageClip;
 
+
+    [SerializeField] Transform gun1SpawnPoint;
+    [SerializeField] Transform gun2SpawnPoint1;
+    [SerializeField] Transform gun2SpawnPoint2;
+    [SerializeField] Transform gun3SpawnPoint1;
+    [SerializeField] Transform gun3SpawnPoint2;
+    [SerializeField] Transform gun3SpawnPoint3;
+
     private void Awake()
     {
         shootEffect = transform.GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
@@ -33,9 +41,12 @@ public class tail : MonoBehaviour
     {
         enemyList = Enemy.Instance.Enemies;
         Vector3 nearestEnemy = FindNearestEnemy();
-        if(transform.GetChild(0).GetComponent<SpriteRenderer>().sprite != null) { 
-        // Calculate the direction to the player
-        Vector3 directionToNearestEnemy = gun.position - nearestEnemy;
+        if(transform.GetChild(0).GetComponent<SpriteRenderer>().sprite != null) {
+            // Calculate the direction to the player
+            string spriteName = transform.GetChild(0).GetComponent<SpriteRenderer>().sprite.name;
+            Vector3 directionToNearestEnemy;
+            if (nearestEnemy != Vector3.zero) { 
+               directionToNearestEnemy = gun.position - nearestEnemy;
         // Calculate the distance to the player
         float distanceToNearestEnemy = directionToNearestEnemy.magnitude;
         // Calculate the angle in radians
@@ -46,8 +57,24 @@ public class tail : MonoBehaviour
         {
             if(shootWait >= 0.8f) 
             {
-                if(levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
-                ShootBullet(nearestEnemy);
+                if(levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) {
+                            switch (spriteName)
+                            {
+                                case "0":
+                                    ShootBullet(nearestEnemy, gun1SpawnPoint.position);
+                                    break;
+                                case "1":
+                                    ShootBullet(nearestEnemy, gun2SpawnPoint1.position,gun2SpawnPoint2.position);
+                                    break;
+                                case "2":
+                                    ShootBullet(nearestEnemy, gun3SpawnPoint1.position, gun3SpawnPoint2.position, gun3SpawnPoint3.position);
+                                    break;
+
+                                default:
+                                    break;
+
+                            }
+                //ShootBullet(nearestEnemy, gun1SpawnPoint);
                 shootEffect.Play();
                 shootSound.clip = shootSoundClip;
                 shootSound.Play();
@@ -59,6 +86,7 @@ public class tail : MonoBehaviour
                 shootWait += Time.deltaTime;
                 animator.SetBool("isFired", false);
                 }
+            }
             }
         }
         else
@@ -115,9 +143,9 @@ public class tail : MonoBehaviour
         return nearestPosition;
     }
 
-    private void ShootBullet(Vector3 nearestEnemy)
+    private void ShootBullet(Vector3 nearestEnemy, Vector3 spawnPosition)
     {
-        GameObject bullet = Instantiate(bulletPrefab, transform.GetChild(0).GetChild(0).position, Quaternion.identity, transform.GetChild(0).GetChild(0));
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
 
         Vector3 direction = (nearestEnemy - transform.GetChild(0).GetChild(0).position).normalized;
 
@@ -134,4 +162,54 @@ public class tail : MonoBehaviour
         Destroy(bullet, 1f);
     }
 
+    private void ShootBullet(Vector3 nearestEnemy, Vector3 spawnPosition1, Vector3 spawnPosition2)
+    {
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition1, Quaternion.identity);
+        GameObject bullet2 = Instantiate(bulletPrefab, spawnPosition2, Quaternion.identity);
+
+        Vector3 direction = (nearestEnemy - transform.GetChild(0).GetChild(0).position).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        angle += 90;
+        bullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        bullet2.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        bullet2.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        
+
+
+
+        Destroy(bullet, 1f);
+        Destroy(bullet2, 1f);
+
     }
+
+    private void ShootBullet(Vector3 nearestEnemy, Vector3 spawnPosition1, Vector3 spawnPosition2, Vector3 spawnPosition3)
+    {
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition1, Quaternion.identity);
+        GameObject bullet2 = Instantiate(bulletPrefab, spawnPosition2, Quaternion.identity);
+        GameObject bullet3 = Instantiate(bulletPrefab, spawnPosition3, Quaternion.identity);
+
+        Vector3 direction = (nearestEnemy - transform.GetChild(0).GetChild(0).position).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        angle += 90;
+        bullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        bullet2.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        bullet3.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        bullet2.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        bullet3.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+
+
+
+
+        Destroy(bullet, 1f);
+        Destroy(bullet2, 1f);
+        Destroy(bullet3, 1f);
+
+    }
+
+}

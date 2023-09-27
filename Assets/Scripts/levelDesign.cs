@@ -29,8 +29,10 @@ public class levelDesign : MonoBehaviour
     public TextMeshProUGUI coinText;
     public float meteorSpeed = 1.0f;
     public int takenDamage = 0;
-    public int growPoint = 2;
+    public int growPoint = 5;
     public int BossTime = 5;
+    public int levelEnemy;
+    public float timeCount = 0;
     
     
 
@@ -44,6 +46,7 @@ public class levelDesign : MonoBehaviour
 
     void Start()
     {
+        levelEnemy = 5;
         endGameBorder.SetActive(false);
         beginningBorder.SetActive(true);
         blackHole.SetActive(false);
@@ -60,6 +63,8 @@ public class levelDesign : MonoBehaviour
 
     private void Update()
     {
+
+        timeCount += Time.deltaTime;
         scoreText.text = "Score: " + score;
         coinText.text = "Coin:" + GameManager.Instance.coin;
 
@@ -156,7 +161,8 @@ public class levelDesign : MonoBehaviour
     public void addScore(int scorePoint)
     {
         score += scorePoint;
-        
+        GameManager.Instance.coin += scorePoint;
+
     }
 
     public int getScore()

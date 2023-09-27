@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UIElements;
 
 public class snakeManage : MonoBehaviour
@@ -70,10 +72,10 @@ public class snakeManage : MonoBehaviour
         
          
 
-        if (levelDesign.Instance.takenDamage >= 10) { 
+        if (levelDesign.Instance.takenDamage >= 2) { 
             removeSnakePart();
-            if(levelDesign.Instance.getScore() > levelDesign.Instance.growPoint && levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
-            levelDesign.Instance.addScore(-2);
+            if(levelDesign.Instance.getScore() > levelDesign.Instance.growPoint && levelDesign.Instance.getScore() < levelDesign.Instance.BossTime && SceneManager.GetActiveScene().name != "Level Endless") { 
+            levelDesign.Instance.addScore(-levelDesign.Instance.growPoint);
                 transform.GetComponent<snakeAddBehaviour>().growScore += -levelDesign.Instance.growPoint;
             }
             Debug.Log(levelDesign.Instance.takenDamage);
@@ -148,7 +150,7 @@ public class snakeManage : MonoBehaviour
 
 
 
-        Debug.Log(HorizontalInput);
+        
         if (HorizontalInput != 0)
             snakeBody[0].transform.Rotate(new Vector3(0, 0, -rotateSpeed * Time.deltaTime * HorizontalInput));
         else

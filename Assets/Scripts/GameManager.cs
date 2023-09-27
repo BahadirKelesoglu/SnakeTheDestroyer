@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
     public int coin = 1500, numberOfSkins = 0, activeSkin=99;
-    public float menuSound, GameSound;
+    
     public int levelScore;
     public bool isMenuActive = true;
     private void Awake()
@@ -34,7 +34,5 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("coin", coin);
         PlayerPrefs.SetInt("numberOfSkins", numberOfSkins);
         PlayerPrefs.SetInt("activeSkin", activeSkin);
-        PlayerPrefs.SetFloat("MenuMusic", menuSound);
-        PlayerPrefs.SetFloat("GameMusic", GameSound);
     }
 }

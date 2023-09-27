@@ -1325,7 +1325,7 @@ MonoBehaviour:
   - {fileID: 305970632}
   Enemies: []
   shotDistance: 5
-  enemySpeed: 0.5
+  enemySpeed: 1
   enemy1BulletPrefab: {fileID: 8611812901305374274, guid: a1c6059e5f6a8154ab1683195c637746, type: 3}
   enemyBoss1BulletPrefab: {fileID: 5666505139193074029, guid: 6b16c61b9a8425c4b9fc008f86422c4b, type: 3}
   enemyHealthList: 
@@ -1647,8 +1647,10 @@ MonoBehaviour:
   coinText: {fileID: 708530359}
   meteorSpeed: 1
   takenDamage: 0
-  growPoint: 1
-  BossTime: 16
+  growPoint: 5
+  BossTime: 50
+  levelEnemy: 0
+  timeCount: 0
 --- !u!4 &434876837
 Transform:
   m_ObjectHideFlags: 0
@@ -3656,7 +3658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
-  m_AmplitudeGain: 0
+  m_AmplitudeGain: 1
   m_FrequencyGain: 1
   mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &1243911866
@@ -9179,7 +9181,7 @@ EdgeCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

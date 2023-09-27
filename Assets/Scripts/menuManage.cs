@@ -17,7 +17,7 @@ public class menuManage : MonoBehaviour
     [SerializeField] GameObject LButton, LPanelChild, LPanel,MPanel, MPanelChild, MButton, snakeGun,buyButton;
     private Sprite emptySprite;
     public int score;
-    int priceOfSkins = 0;
+    int priceOfSkins = 200;
     int levelName = 1;
     // Start is called before the first frame update
 
@@ -69,7 +69,7 @@ public class menuManage : MonoBehaviour
                 temp.transform.GetChild(0).gameObject.SetActive(false);
             }
             temp.transform.SetParent(MPanelChild.transform, false);
-            priceOfSkins += 100;
+            priceOfSkins += 200;
             temp.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = priceOfSkins.ToString();
             temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite, skinName));            
 
@@ -107,6 +107,11 @@ public class menuManage : MonoBehaviour
         coins += value;
         coinUI.text = "Coins: " + coins.ToString();
 
+    }
+
+    public void EndlessMode()
+    {
+        SceneManager.LoadScene("Level Endless");
     }
 
     public void selectGun(Sprite sprite,string i)

@@ -18,25 +18,32 @@ public class soundManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        LoadVolumeSettings();
+    }
+
     public void SetMusicVolume()
     {
 
         float volumeMain = MainMusicSlider.value;
-        
-
         myMixer.SetFloat("MainMusic", Mathf.Log10(volumeMain)*20);
 
-        
+        PlayerPrefs.SetFloat("MainMusic", volumeMain);
+        PlayerPrefs.Save();
+
+
     }
 
     public void SetGameVolume()
     {
 
         
-        float volumeGame = GameMusicSlider.value;
-
-        
+        float volumeGame = GameMusicSlider.value;       
         myMixer.SetFloat("GameMusic", Mathf.Log10(volumeGame) * 20);
+
+        PlayerPrefs.SetFloat("GameMusic", volumeGame);
+        PlayerPrefs.Save();
 
     }
 
@@ -58,6 +65,23 @@ public class soundManager : MonoBehaviour
         {
             MainMusicSlider.gameObject.SetActive(true);
             GameMusicSlider.gameObject.SetActive(true);
+        }
+    }
+
+    private void LoadVolumeSettings()
+    {
+        if (PlayerPrefs.HasKey("MainMusic"))
+        {
+            float mainMusicVolume = PlayerPrefs.GetFloat("MainMusic");
+            MainMusicSlider.value = mainMusicVolume;
+            myMixer.SetFloat("MainMusic", Mathf.Log10(mainMusicVolume) * 20);
+        }
+
+        if (PlayerPrefs.HasKey("GameMusic"))
+        {
+            float gameMusicVolume = PlayerPrefs.GetFloat("GameMusic");
+            GameMusicSlider.value = gameMusicVolume;
+            myMixer.SetFloat("GameMusic", Mathf.Log10(gameMusicVolume) * 20);
         }
     }
 }

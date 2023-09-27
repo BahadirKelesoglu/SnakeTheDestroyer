@@ -2,6 +2,8 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public class Enemy : MonoBehaviour
 {
 
@@ -15,7 +17,7 @@ public class Enemy : MonoBehaviour
     public List<GameObject> Enemies;
     [SerializeField] float shotDistance = 5f;
     public RaycastHit hit;
-    [SerializeField] float enemySpeed = 0.5f;
+    [SerializeField] float enemySpeed = 1f;
     [SerializeField] GameObject enemy1BulletPrefab;
     [SerializeField] GameObject enemyBoss1BulletPrefab;
     private List<float> shootingCooldowns;
@@ -25,6 +27,8 @@ public class Enemy : MonoBehaviour
     public GameObject vCamera;
     private bool shouldShowEnemyBoss = false;
     private float coolDownEnemyBoss = 2f;
+    private int levelEnemyCount = 0;
+    private int levelUp = 60;
 
     
     
@@ -50,6 +54,17 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(levelDesign.Instance.timeCount > levelUp)
+        {
+            levelUp += 60;
+            levelDesign.Instance.levelEnemy += 2;
+            levelEnemyCount = 0;
+            enemyHealth += 10;
+            if(enemySpeed <= 3)
+            enemySpeed += 0.2f;
+            StartCoroutine(spawnEnemy());
+        }
 
         if (levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
         
@@ -78,8 +93,8 @@ public class Enemy : MonoBehaviour
                     else
                         shootingCooldowns[i] -= Time.deltaTime;
                 }
-                else
-                {
+                
+              
 
 
 
@@ -91,7 +106,7 @@ public class Enemy : MonoBehaviour
 
                     // Rotate the enemy towards the player
 
-                }
+                
             }
             }
         }
@@ -139,8 +154,9 @@ public class Enemy : MonoBehaviour
     {
         while (levelDesign.Instance.getScore() < levelDesign.Instance.BossTime)
         {
-            if(Enemies.Count < 15) {
-                Debug.Log(Enemies.Count);          
+            if(levelDesign.Instance.levelEnemy > levelEnemyCount) {
+                levelEnemyCount++;
+                Debug.Log(Enemies.Count + "enemy");          
             int randomSpawnPoint = Random.Range(0, 4);
             GameObject enemy1;
             if(randomSpawnPoint < 2) 
