@@ -21,7 +21,8 @@ public class headEat : MonoBehaviour
 
     private void Start()
     {
-        
+        // Initialize the Google Mobile Ads SDK (call this once at the start).
+        Interstitial.InitializeInterstitial();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -36,7 +37,7 @@ public class headEat : MonoBehaviour
 
         if (other.gameObject.CompareTag("wall"))
         {
-            Debug.Log("walla değdim");
+            
             transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z+180f);
         }
 
@@ -94,8 +95,13 @@ public class headEat : MonoBehaviour
                 getDamage.clip = WinSound;
                 getDamage.Play();
                 finishedFlag = false;
-                
+
+                Interstitial.LoadLoadInterstitialAd();
+                Interstitial.ShowInterstitialAd();
+
             }
+            if(stopTimer <= -3f && Time.timeScale ==1)
+                Time.timeScale = 0f;
             }
 
     }

@@ -156,7 +156,7 @@ public class Enemy : MonoBehaviour
         {
             if(levelDesign.Instance.levelEnemy > levelEnemyCount) {
                 levelEnemyCount++;
-                Debug.Log(Enemies.Count + "enemy");          
+                         
             int randomSpawnPoint = Random.Range(0, 4);
             GameObject enemy1;
             if(randomSpawnPoint < 2) 

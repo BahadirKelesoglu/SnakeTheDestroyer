@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,6 +35,7 @@ public class snakeManage : MonoBehaviour
     private bool animationFlag = true;
     private bool loseFlag = true;
     [SerializeField] AudioClip LoseSound;
+    public TextMeshProUGUI deneme;
 
     
 
@@ -46,7 +47,11 @@ public class snakeManage : MonoBehaviour
 
     void Start()
     {
-        
+        animationFlag = true;
+        loseFlag = true;
+        // Initialize the Google Mobile Ads SDK (call this once at the start).
+        Interstitial.InitializeInterstitial();
+
         CreateBodyParts();
         
     }
@@ -60,60 +65,94 @@ public class snakeManage : MonoBehaviour
 
     private void Update()
     {
+
+
         if (transform.GetComponent<Animator>().GetBool("Finish") && animationFlag)
         {
             transform.GetComponent<AudioSource>().Play();
             animationFlag = false;
         }
-        
+
 
         GameobjectRotation = joystick.Horizontal;
         HorizontalInput = Input.GetAxis("Horizontal");
-        
-         
 
-        if (levelDesign.Instance.takenDamage >= 2) { 
-            removeSnakePart();
-            if(levelDesign.Instance.getScore() > levelDesign.Instance.growPoint && levelDesign.Instance.getScore() < levelDesign.Instance.BossTime && SceneManager.GetActiveScene().name != "Level Endless") { 
-            levelDesign.Instance.addScore(-levelDesign.Instance.growPoint);
-                transform.GetComponent<snakeAddBehaviour>().growScore += -levelDesign.Instance.growPoint;
+
+
+        if (levelDesign.Instance.takenDamage >= 2) {
+            if (transform.childCount == 1)
+            {
+                Destroy(transform.GetChild(0).gameObject);
             }
-            Debug.Log(levelDesign.Instance.takenDamage);
-            levelDesign.Instance.takenDamage = 0;
-            
-        }
-        if (snakeBody[0] != null) { 
-        if (snakeBody[0].name != "snakeHead")
-        {
-                Time.timeScale = 0;
-                pausePanel.SetActive(true);
-            resumeButton.SetActive(false);
-            winOrLoseText.text = "LOSE";
-                if (loseFlag)
-                {
-                    transform.GetComponent<AudioSource>().clip = LoseSound;
-                    transform.GetComponent<AudioSource>().Play();
-                    loseFlag = false;
+            else
+            {
+
+
+                removeSnakePart();
+                if (levelDesign.Instance.getScore() > levelDesign.Instance.growPoint && levelDesign.Instance.getScore() < levelDesign.Instance.BossTime && SceneManager.GetActiveScene().name != "Level Endless") {
+                    levelDesign.Instance.addScore(-levelDesign.Instance.growPoint);
+                    transform.GetComponent<snakeAddBehaviour>().growScore += -levelDesign.Instance.growPoint;
                 }
-
-
             }
-            
+
+            levelDesign.Instance.takenDamage = 0;
+
         }
-        else
+
+        if (snakeBody != null) { 
+
+        if (snakeBody[0].name != "snakeHead" || snakeBody == null || snakeBody[0].layer != 7)
         {
-            Time.timeScale = 0;
-            pausePanel.SetActive(true);
-            resumeButton.SetActive(false);
-            winOrLoseText.text = "LOSE";
-            if (loseFlag) { 
-            transform.GetComponent<AudioSource>().clip = LoseSound;
-            transform.GetComponent<AudioSource>().Play();
+
+            if (Time.timeScale == 1)
+                Time.timeScale = 0f;
+
+
+            if (loseFlag)
+            {
+                Interstitial.LoadLoadInterstitialAd();
+                Interstitial.ShowInterstitialAd();
+                
+                Time.timeScale = 0f;
+                pausePanel.SetActive(true);
+                resumeButton.SetActive(false);
+                winOrLoseText.text = "LOSE";
+                // Load and show the interstitial ad when needed.
+
+                transform.GetComponent<AudioSource>().clip = LoseSound;
+                transform.GetComponent<AudioSource>().Play();
                 loseFlag = false;
+
             }
 
 
         }
+
+    }
+          else
+          {
+              if(Time.timeScale == 1)
+              Time.timeScale = 0f;
+
+
+              if (loseFlag) {
+
+                  Interstitial.LoadLoadInterstitialAd();
+                  Interstitial.ShowInterstitialAd();
+                  
+                  Time.timeScale = 0f;
+                  pausePanel.SetActive(true);
+                  resumeButton.SetActive(false);
+                  winOrLoseText.text = "LOSE";
+
+                  transform.GetComponent<AudioSource>().clip = LoseSound;
+              transform.GetComponent<AudioSource>().Play();
+                  loseFlag = false;
+
+              }
+
+
+          }
 
 
         if (Time.timeScale == 0)
@@ -140,7 +179,7 @@ public class snakeManage : MonoBehaviour
             }       
         }
         if (snakeBody.Count == 0)
-            Destroy(this);
+            snakeBody = null;
     }
 
     void snakeMovement()

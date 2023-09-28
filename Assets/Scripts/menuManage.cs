@@ -12,6 +12,7 @@ using UnityEngine.UI;
 public class menuManage : MonoBehaviour
 {
 
+
     private int coins;
     public TMP_Text coinUI;
     [SerializeField] GameObject LButton, LPanelChild, LPanel,MPanel, MPanelChild, MButton, snakeGun,buyButton;
@@ -21,10 +22,12 @@ public class menuManage : MonoBehaviour
     int levelName = 1;
     // Start is called before the first frame update
 
+
+
     private void Awake()
     {
-        
-        
+       
+
         MPanel.SetActive(false);
         LPanel.SetActive(false);
         buyButton.SetActive(false);       
@@ -36,6 +39,8 @@ public class menuManage : MonoBehaviour
     }
     void Start()
     {
+
+
         coinUI.text = "Coins: " + GameManager.Instance.coin;
 
         Sprite[] sprites = Resources.LoadAll<Sprite>("Level");
@@ -74,7 +79,7 @@ public class menuManage : MonoBehaviour
             temp.GetComponent<Button>().onClick.AddListener(() => selectGun(sprite, skinName));            
 
         }
-        Debug.Log(GameManager.Instance.activeSkin);
+        
         if(GameManager.Instance.activeSkin != 99) { 
         snakeGun.SetActive(true);
         snakeGun.GetComponent<Image>().sprite = spritesPlayer[GameManager.Instance.activeSkin];
@@ -84,6 +89,8 @@ public class menuManage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         coinUI.text = "Coins: " + GameManager.Instance.coin;
     }
 
@@ -129,8 +136,7 @@ public class menuManage : MonoBehaviour
                 //Sorry for that.There is a logic writing style in the buy func.--- It just control our coin for do we have enough to buy it.
                 if (GameManager.Instance.coin >= int.Parse(MPanelChild.transform.GetChild(int.Parse(i)).GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text))
                     buyButton.GetComponent<Button>().onClick.AddListener(() => buy(i));
-                else
-                    Debug.Log("we don't have enough money");
+                
             
                 
             }
@@ -164,14 +170,34 @@ public class menuManage : MonoBehaviour
         buyButton.SetActive(false) ;
         
             GameObject skinObject = MPanelChild.transform.GetChild(IntSkinIndex).gameObject;
-            Debug.Log(skinObject.name);
+            
             GameObject childOfParent = skinObject.transform.GetChild(0).GetChild(0).gameObject;
-            Debug.Log(childOfParent.GetComponent<TextMeshProUGUI>().text);
+            
             skinObject.transform.GetChild(0).gameObject.SetActive(false);
             GameManager.Instance.coin -= int.Parse(childOfParent.GetComponent<TextMeshProUGUI>().text);
             
 
             GameManager.Instance.Save();
+    }
+
+    public void Adbuy()
+    {
+        PlayerPrefs.SetInt("0", 1);
+        int IntSkinIndex = int.Parse("0");
+        buyButton.SetActive(false);
+
+        GameObject skinObject = MPanelChild.transform.GetChild(IntSkinIndex).gameObject;
+        
+        GameObject childOfParent = skinObject.transform.GetChild(0).GetChild(0).gameObject;
+        
+        skinObject.transform.GetChild(0).gameObject.SetActive(false);
+        //GameManager.Instance.coin -= int.Parse(childOfParent.GetComponent<TextMeshProUGUI>().text);
+
+
+        GameManager.Instance.Save();
+
+        RewardedAdContoller.Instance.LoadRewardedAd();
+        RewardedAdContoller.Instance.ShowRewardedAd();
     }
 
 

@@ -4484,6 +4484,7 @@ MonoBehaviour:
   winOrLoseText: {fileID: 75425046}
   joystick: {fileID: 500042534}
   LoseSound: {fileID: 8300000, guid: ffdb27750900bbb4ab5e546febf40643, type: 3}
+  deneme: {fileID: 0}
 --- !u!4 &1776169162
 Transform:
   m_ObjectHideFlags: 0

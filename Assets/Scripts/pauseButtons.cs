@@ -15,18 +15,12 @@ public class pauseButtons : MonoBehaviour
     public void PauseButton()
     {
 
-        if (Time.timeScale == 0f)
-        {
-            Time.timeScale = 1f;
-            pausePanel.SetActive(false);
-            GameManager.Instance.isMenuActive = false;
-        }
-        else
-        {
+
             Time.timeScale = 0f;
+            
             pausePanel.SetActive(true);
             GameManager.Instance.isMenuActive = true;
-        }
+        
     }
 
     public void MainMenuButton()
