@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -29,6 +30,10 @@ public class Enemy : MonoBehaviour
     private float coolDownEnemyBoss = 2f;
     private int levelEnemyCount = 0;
     private int levelUp = 60;
+    private int levelUpCount = 50;
+    private int whichLevel = 0;
+
+    [SerializeField] GameObject stageUpText;
 
     
     
@@ -54,16 +59,25 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
 
-        if(levelDesign.Instance.timeCount > levelUp)
-        {
-            levelUp += 60;
+        if(levelDesign.Instance.timeCount > levelUp - 50)
+            stageUpText.GetComponent<Animator>().SetBool("IsLevelUp", false);
+
+        if (levelDesign.Instance.timeCount > levelUp)
+        { // stage 1 - 0 sec, stage 2 - 60 sec, stage 3 - 125 sec, stage 4 - 205 sec
+            levelUpCount += 15;
+            levelUp += levelUpCount;
             levelDesign.Instance.levelEnemy += 2;
             levelEnemyCount = 0;
             enemyHealth += 10;
             if(enemySpeed <= 3)
             enemySpeed += 0.2f;
+
             StartCoroutine(spawnEnemy());
+            
+
+
         }
 
         if (levelDesign.Instance.getScore() < levelDesign.Instance.BossTime) { 
@@ -152,6 +166,10 @@ public class Enemy : MonoBehaviour
 
     IEnumerator spawnEnemy()
     {
+        whichLevel += 1;
+        stageUpText.GetComponent<TextMeshProUGUI>().text = "Stage " + whichLevel;
+        stageUpText.GetComponent<Animator>().SetBool("IsLevelUp", true);
+
         while (levelDesign.Instance.getScore() < levelDesign.Instance.BossTime)
         {
             if(levelDesign.Instance.levelEnemy > levelEnemyCount) {
@@ -179,6 +197,9 @@ public class Enemy : MonoBehaviour
             }
             yield return new WaitForSeconds(spawnTime);
         }
+        levelUpCount += 10;
+        
+        
     }
 
     void ShootBullet(Vector3 spawnPosition, GameObject bulletPrefab, int bulletSpeed)

@@ -26,9 +26,11 @@ public class snakeManage : MonoBehaviour
     public TextMeshProUGUI winOrLoseText;
 
 
-    public Joystick joystick;
-    float GameobjectRotation;
+    //public Joystick joystick;
+    //float GameobjectRotation;
     float HorizontalInput;
+
+    private float screenWidth;
 
 
 
@@ -47,10 +49,13 @@ public class snakeManage : MonoBehaviour
 
     void Start()
     {
+        screenWidth = Screen.width;
+       
         animationFlag = true;
         loseFlag = true;
         // Initialize the Google Mobile Ads SDK (call this once at the start).
         Interstitial.InitializeInterstitial();
+        Interstitial.LoadLoadInterstitialAd();
 
         CreateBodyParts();
         
@@ -66,6 +71,29 @@ public class snakeManage : MonoBehaviour
     private void Update()
     {
 
+        int i = 0;
+
+        while(i < Input.touchCount)
+        {
+            if (Input.GetTouch(i).position.x > screenWidth / 2)
+            {
+                HorizontalInput = 1.0f;
+            }
+
+            if (Input.GetTouch(i).position.x < screenWidth / 2)
+            {
+                HorizontalInput = -1.0f;
+            }
+            ++i;
+            
+        }
+        if (Input.touchCount == 0)
+        {
+            HorizontalInput = 0.0f; // No touches detected, set to 0
+        }
+
+        
+
 
         if (transform.GetComponent<Animator>().GetBool("Finish") && animationFlag)
         {
@@ -74,8 +102,8 @@ public class snakeManage : MonoBehaviour
         }
 
 
-        GameobjectRotation = joystick.Horizontal;
-        HorizontalInput = Input.GetAxis("Horizontal");
+        //GameobjectRotation = joystick.Horizontal;
+        //HorizontalInput = Input.GetAxis("Horizontal");
 
 
 
@@ -101,7 +129,7 @@ public class snakeManage : MonoBehaviour
 
         if (snakeBody != null) { 
 
-        if (snakeBody[0].name != "snakeHead" || snakeBody == null || snakeBody[0].layer != 7)
+        if ( snakeBody == null )
         {
 
             if (Time.timeScale == 1)
@@ -110,10 +138,8 @@ public class snakeManage : MonoBehaviour
 
             if (loseFlag)
             {
-                Interstitial.LoadLoadInterstitialAd();
-                Interstitial.ShowInterstitialAd();
-                
-                Time.timeScale = 0f;
+
+                    Time.timeScale = 0f;
                 pausePanel.SetActive(true);
                 resumeButton.SetActive(false);
                 winOrLoseText.text = "LOSE";
@@ -137,9 +163,8 @@ public class snakeManage : MonoBehaviour
 
               if (loseFlag) {
 
-                  Interstitial.LoadLoadInterstitialAd();
-                  Interstitial.ShowInterstitialAd();
                   
+
                   Time.timeScale = 0f;
                   pausePanel.SetActive(true);
                   resumeButton.SetActive(false);
@@ -155,12 +180,12 @@ public class snakeManage : MonoBehaviour
           }
 
 
-        if (Time.timeScale == 0)
+     /*   if (Time.timeScale == 0)
         {
             joystick.gameObject.SetActive(false);
         }
         else
-            joystick.gameObject.SetActive(true);
+            joystick.gameObject.SetActive(true);*/
     }
 
     void manageSnakeBody()
@@ -184,16 +209,14 @@ public class snakeManage : MonoBehaviour
 
     void snakeMovement()
     {
-
+        if(snakeBody != null)
         snakeBody[0].GetComponent<Rigidbody2D>().velocity = snakeBody[0].transform.right * speed * Time.deltaTime;
 
 
 
-        
-        if (HorizontalInput != 0)
-            snakeBody[0].transform.Rotate(new Vector3(0, 0, -rotateSpeed * Time.deltaTime * HorizontalInput));
-        else
-        snakeBody[0].transform.Rotate(new Vector3 (0, 0, -rotateSpeed * Time.deltaTime * GameobjectRotation));
+
+        if (snakeBody != null)
+            snakeBody[0].transform.Rotate(new Vector3 (0, 0, -rotateSpeed * Time.deltaTime * HorizontalInput));
 
 
 
@@ -203,7 +226,7 @@ public class snakeManage : MonoBehaviour
 
 
 
-
+        if(snakeBody != null) { 
         if (snakeBody.Count > 1) //Every part take the position of the next part, thanks to that, they follow next part
         { 
             for( int i = 1; i<snakeBody.Count; i++ )
@@ -216,6 +239,7 @@ public class snakeManage : MonoBehaviour
 
             }        
         }
+                            }
     }
 
       void CreateBodyParts()

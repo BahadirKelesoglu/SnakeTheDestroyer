@@ -39,7 +39,7 @@ public class menuManage : MonoBehaviour
     }
     void Start()
     {
-
+        RewardedAdContoller.Instance.LoadRewardedAd();
 
         coinUI.text = "Coins: " + GameManager.Instance.coin;
 
@@ -97,6 +97,7 @@ public class menuManage : MonoBehaviour
     void LoadLevel(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        
     }
 
     public void OpenLevelPanel()
@@ -119,6 +120,7 @@ public class menuManage : MonoBehaviour
     public void EndlessMode()
     {
         SceneManager.LoadScene("Level Endless");
+        
     }
 
     public void selectGun(Sprite sprite,string i)
@@ -196,7 +198,7 @@ public class menuManage : MonoBehaviour
 
         GameManager.Instance.Save();
 
-        RewardedAdContoller.Instance.LoadRewardedAd();
+        
         RewardedAdContoller.Instance.ShowRewardedAd();
     }
 

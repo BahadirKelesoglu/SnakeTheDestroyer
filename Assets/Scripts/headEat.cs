@@ -23,6 +23,7 @@ public class headEat : MonoBehaviour
     {
         // Initialize the Google Mobile Ads SDK (call this once at the start).
         Interstitial.InitializeInterstitial();
+        Interstitial.LoadLoadInterstitialAd();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -96,8 +97,7 @@ public class headEat : MonoBehaviour
                 getDamage.Play();
                 finishedFlag = false;
 
-                Interstitial.LoadLoadInterstitialAd();
-                Interstitial.ShowInterstitialAd();
+                
 
             }
             if(stopTimer <= -3f && Time.timeScale ==1)

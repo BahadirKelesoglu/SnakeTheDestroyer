@@ -42,6 +42,7 @@ public class levelDesign : MonoBehaviour
         
         instance = this;
         score = 0;
+        GameManager.Instance.adsInOneGame = 0;
     }
 
     void Start()
@@ -65,7 +66,12 @@ public class levelDesign : MonoBehaviour
     {
 
         timeCount += Time.deltaTime;
-        scoreText.text = "Score: " + score;
+        if(SceneManager.GetActiveScene().buildIndex == 1)
+        scoreText.text = "Score: " + score + "/60";
+
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+            scoreText.text = "Score: " + score;
+
         coinText.text = "Coin:" + GameManager.Instance.coin;
 
         for(int i = 0; i < transform.childCount; i++)

@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     
     public int levelScore;
     public bool isMenuActive = true;
+
+    public bool restartFlagAds = false;
+    public bool mainMenuAds = false;
+    public int adsInOneGame = 0;
     private void Awake()
     {
         

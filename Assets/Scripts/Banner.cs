@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class Banner : MonoBehaviour
 {
+
+    private static Banner instance;
+    public static Banner Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        instance = this;
+    }
     public void Start()
     {
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize((InitializationStatus initStatus) =>
         {
-            //LoadAd();
+            LoadAd();
         });
     }
 
@@ -37,9 +45,9 @@ public class Banner : MonoBehaviour
         {
             DestroyBannerView();
         }
-
+        
         // Create a 320x50 banner at top of the screen
-        _bannerView = new BannerView(_adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
+        _bannerView = new BannerView(_adUnitId, AdSize.Banner, AdPosition.Bottom);
     }
 
     /// <summary>
